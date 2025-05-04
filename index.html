@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Feliz Aniversário!</title>
     <style>
         * {
@@ -15,6 +15,7 @@
         body {
             background-color: #f9f9f9;
             line-height: 1.6;
+            touch-action: manipulation;
         }
 
         .header {
@@ -96,37 +97,32 @@
             font-size: 0.9em;
         }
 
-        @media (max-width: 768px) {
-            .polaroid-grid {
-                gap: 20px;
-                padding: 20px;
-            }
-            
-            .frase-aniversario h2 {
-                font-size: 1.8em;
-            }
-        }
-
+        /* Animação dos corações */
         .coracao {
             position: fixed;
             pointer-events: none;
-            font-size: 24px;
-            animation: flutuar 3s linear forwards;
+            font-size: 28px;
+            animation: flutuar 6s ease-in-out forwards;
             z-index: 1000;
-            opacity: 0.8;
+            opacity: 0.9;
+            user-select: none;
         }
 
         @keyframes flutuar {
             0% {
-                transform: translateY(100vh) scale(0.8);
+                transform: translateY(110vh) scale(0.8);
                 opacity: 1;
             }
+            50% {
+                opacity: 0.8;
+            }
             100% {
-                transform: translateY(-30vh) scale(1.2);
+                transform: translateY(-50vh) scale(1.5);
                 opacity: 0;
             }
         }
 
+        /* Overlay fullscreen */
         .overlay {
             position: fixed;
             top: 0;
@@ -210,6 +206,28 @@
             opacity: 1;
             transform: rotate(90deg);
         }
+
+        @media (max-width: 768px) {
+            .polaroid-grid {
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            .frase-aniversario h2 {
+                font-size: 1.8em;
+            }
+
+            .coracao {
+                font-size: 32px;
+                animation-duration: 7s;
+            }
+
+            .close-btn {
+                font-size: 42px;
+                top: 15px;
+                right: 15px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -241,36 +259,43 @@
     </div>
 
     <script>
-        // Animação dos corações corrigida
+        // Sistema de corações otimizado para mobile
         function criarCoracao() {
             const coracao = document.createElement('div');
             coracao.innerHTML = '❤️';
             coracao.className = 'coracao';
             
-            const posX = Math.random() * (window.innerWidth - 50);
+            const posX = Math.random() * (window.innerWidth - 100);
+            const delay = Math.random() * 3;
+            const tamanho = 28 + Math.random() * 24;
+            
             coracao.style.left = `${posX}px`;
-            coracao.style.animation = `flutuar ${2 + Math.random() * 2}s ease-out`;
+            coracao.style.animation = `flutuar ${5 + Math.random() * 3}s ease-in-out ${delay}s`;
+            coracao.style.fontSize = `${tamanho}px`;
             
             document.body.appendChild(coracao);
             
-            setTimeout(() => coracao.remove(), 3000);
+            setTimeout(() => {
+                coracao.remove();
+            }, 8000);
         }
 
-        // Disparar corações ao carregar e no scroll
+        // Disparador reforçado para mobile
         let heartsTriggered = false;
         function dispararCoroes() {
             if (!heartsTriggered) {
-                for (let i = 0; i < 25; i++) {
-                    setTimeout(criarCoracao, i * 80);
+                for (let i = 0; i < 50; i++) {
+                    setTimeout(criarCoracao, i * 120);
                 }
                 heartsTriggered = true;
             }
         }
 
+        // Eventos multiplataforma
         window.addEventListener('load', dispararCoroes);
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) dispararCoroes();
-        });
+        window.addEventListener('scroll', dispararCoroes);
+        window.addEventListener('touchstart', dispararCoroes);
+        window.addEventListener('click', dispararCoroes);
 
         // Sistema de Fullscreen
         document.querySelectorAll('.polaroid').forEach(polaroid => {

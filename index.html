@@ -98,29 +98,25 @@
             font-size: 0.9em;
         }
 
-        /* Animação dos corações corrigida */
+        /* Nova animação de corações */
         .coracao {
             position: fixed;
             pointer-events: none;
-            font-size: 28px;
-            animation: flutuar 6s ease-in-out forwards;
+            font-size: 24px;
+            animation: voar 4s linear forwards;
             z-index: 1000;
-            opacity: 0.9;
+            opacity: 0;
             user-select: none;
             will-change: transform, opacity;
         }
 
-        @keyframes flutuar {
+        @keyframes voar {
             0% {
-                transform: translateY(100vh) translateX(-10%) scale(0.8);
+                transform: translateY(100vh) translateX(0);
                 opacity: 1;
             }
-            50% {
-                transform: translateY(50vh) translateX(10%) scale(1.2);
-                opacity: 0.8;
-            }
             100% {
-                transform: translateY(-20vh) translateX(-10%) scale(1.5);
+                transform: translateY(-100vh) translateX(20vw);
                 opacity: 0;
             }
         }
@@ -140,7 +136,6 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            -webkit-backdrop-filter: blur(12px);
             backdrop-filter: blur(12px);
         }
 
@@ -222,17 +217,17 @@
             }
 
             .coracao {
-                font-size: 36px;
-                animation-duration: 6s !important;
+                font-size: 32px;
+                animation-duration: 5s;
             }
 
-            @keyframes flutuar {
+            @keyframes voar {
                 0% {
-                    transform: translateY(100vh) translateX(-5%) scale(0.8);
+                    transform: translateY(100vh) translateX(0);
                     opacity: 1;
                 }
                 100% {
-                    transform: translateY(-10vh) translateX(5%) scale(1.5);
+                    transform: translateY(-50vh) translateX(10vw);
                     opacity: 0;
                 }
             }
@@ -274,53 +269,52 @@
     </div>
 
     <script>
-        // Sistema de corações otimizado para mobile
+        // Novo sistema de corações com Intersection Observer
+        let heartsActive = false;
+        
         function criarCoracao() {
             const coracao = document.createElement('div');
             coracao.innerHTML = '❤️';
             coracao.className = 'coracao';
             
-            const posX = Math.random() * (window.innerWidth - 50);
-            const delay = Math.random() * 2;
-            const tamanho = 28 + Math.random() * 24;
-            
-            coracao.style.left = `${posX}px`;
-            coracao.style.animation = `flutuar ${5}s ease-in-out ${delay}s`;
-            coracao.style.fontSize = `${tamanho}px`;
+            const startX = Math.random() * window.innerWidth;
+            coracao.style.left = `${startX}px`;
             
             document.body.appendChild(coracao);
             
-            setTimeout(() => {
-                coracao.remove();
-            }, 7000);
+            setTimeout(() => coracao.remove(), 5000);
         }
 
-        // Disparador reforçado para mobile
-        let heartsTriggered = false;
-        function dispararCoroes() {
-            if (!heartsTriggered) {
-                heartsTriggered = true;
-                for (let wave = 0; wave < 3; wave++) {
-                    for (let i = 0; i < 15; i++) {
-                        setTimeout(() => {
-                            criarCoracao();
-                            criarCoracao();
-                        }, i * 300 + wave * 2000);
-                    }
+        function startHearts() {
+            if(heartsActive) return;
+            heartsActive = true;
+            
+            const interval = setInterval(() => {
+                for(let i = 0; i < 3; i++) {
+                    criarCoracao();
                 }
-            }
+            }, 500);
+
+            setTimeout(() => clearInterval(interval), 20000);
         }
 
-        // Eventos multiplataforma corrigidos
-        window.addEventListener('load', dispararCoroes);
-        window.addEventListener('scroll', dispararCoroes);
-        
-        if ('ontouchstart' in window) {
-            window.addEventListener('touchstart', dispararCoroes);
-            window.addEventListener('touchend', dispararCoroes);
-        } else {
-            window.addEventListener('click', dispararCoroes);
-        }
+        // Observador para a seção principal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    startHearts();
+                }
+            });
+        }, { threshold: 0.3 });
+
+        observer.observe(document.querySelector('.frase-aniversario'));
+
+        // Fallback para scroll
+        window.addEventListener('scroll', () => {
+            if(window.scrollY > 200 && !heartsActive) {
+                startHearts();
+            }
+        });
 
         // Sistema de Fullscreen
         document.querySelectorAll('.polaroid').forEach(polaroid => {

@@ -9,34 +9,33 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', cursive;
+            font-family: 'Arial', sans-serif;
         }
 
         body {
-            background-color: #fff5f8;
+            background-color: #f9f9f9;
             line-height: 1.6;
         }
 
         .header {
-            background-color: #ffecf3;
-            padding: 30px 20px;
+            background-color: #ffffff;
+            padding: 40px 20px;
             text-align: center;
-            border-bottom: 3px dashed #ff99bb;
+            border-bottom: 2px solid #eeeeee;
         }
 
         .frase-aniversario {
             text-align: center;
-            padding: 50px 20px;
-            background: linear-gradient(45deg, #ff99bb, #ff6699);
-            color: white;
+            padding: 60px 20px;
+            background: #f0f4ff;
             margin: 30px 0;
-            position: relative;
         }
 
         .frase-aniversario h2 {
-            font-size: 2.5em;
+            font-size: 2.2em;
+            color: #2c3e50;
             margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            font-style: italic;
         }
 
         .polaroid-grid {
@@ -50,54 +49,51 @@
 
         .polaroid {
             background: white;
-            padding: 15px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transform: rotate(3deg);
+            padding: 15px 15px 40px 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transform: rotate(2deg);
             transition: transform 0.3s;
             cursor: pointer;
+            position: relative;
+        }
+
+        .polaroid::after {
+            content: '';
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            height: 1px;
+            background: #ddd;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .polaroid:nth-child(even) {
-            transform: rotate(-2deg);
+            transform: rotate(-1deg);
         }
 
         .polaroid:hover {
-            transform: rotate(0deg) scale(1.05);
+            transform: rotate(0deg) scale(1.03);
         }
 
         .polaroid img {
             width: 100%;
-            height: 200px;
+            height: 250px;
             object-fit: cover;
-            border: 2px solid #eee;
+            filter: grayscale(20%);
+            transition: filter 0.3s;
         }
 
-        .mensagens {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            padding: 40px 20px;
-            background-color: #fff0f5;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 1s ease;
+        .polaroid:hover img {
+            filter: grayscale(0%);
         }
 
-        .mensagens.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .mensagem {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            max-width: 600px;
-            margin: 0 auto;
+        .polaroid p {
             text-align: center;
-            font-style: italic;
+            margin-top: 20px;
             color: #666;
+            font-size: 0.9em;
         }
 
         @media (max-width: 768px) {
@@ -111,68 +107,92 @@
             }
         }
 
-        .coracoes {
+        /* Animação dos corações ajustada */
+        .coracao {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            font-size: 24px;
-            color: #ff6699;
-            z-index: 100;
+            pointer-events: none;
+            font-size: 20px;
+            animation: flutuar 3s linear forwards;
+            z-index: 1000;
+        }
+
+        @keyframes flutuar {
+            0% {
+                transform: translateY(100vh) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(0);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
     <header class="header">
-        <h1>🎉 Feliz Aniversário! 🎂</h1>
+        <h1>🎂 Feliz Aniversário! 🌟</h1>
     </header>
 
     <section class="frase-aniversario">
-        <h2>"A vida é mais doce quando celebramos juntos!"</h2>
-        <p>Este é um dia especial para lembrar de todos os momentos incríveis que compartilhamos</p>
+        <h2>"Cada ano é uma nova página<br>na história da sua vida"</h2>
     </section>
 
     <div class="polaroid-grid">
-        <!-- Adicione suas fotos aqui -->
         <div class="polaroid">
-            <img src="https://source.unsplash.com/random/800x600/?birthday" alt="Momento Feliz">
-            <p>Primeira comemoração</p>
+            <img src="https://source.unsplash.com/random/800x600/?happy" alt="Momento Feliz">
+            <p>Celebrando a vida!</p>
         </div>
         <div class="polaroid">
-            <img src="https://source.unsplash.com/random/800x601/?celebration" alt="Celebração">
-            <p>Risadas compartilhadas</p>
+            <img src="https://source.unsplash.com/random/800x601/?smile" alt="Sorriso">
+            <p>Momento especial</p>
         </div>
         <div class="polaroid">
-            <img src="https://source.unsplash.com/random/800x602/?party" alt="Festa">
-            <p>Noite especial</p>
+            <img src="https://source.unsplash.com/random/800x602/?joy" alt="Alegria">
+            <p>Felicidade em cada detalhe</p>
+        </div>
+        <div class="polaroid">
+            <img src="https://source.unsplash.com/random/800x603/?celebration" alt="Festa">
+            <p>Momento único</p>
         </div>
     </div>
-
-    <div class="mensagens">
-        <div class="mensagem">Você torna cada momento mais brilhante ✨</div>
-        <div class="mensagem">Que este ano traga novas aventuras! 🌟</div>
-        <div class="mensagem">Sua existência é um presente para o mundo 🎁</div>
-    </div>
-
-    <div class="coracoes">❤️🧡💛💚💙💜</div>
 
     <script>
-        // Animação das mensagens ao scroll
-        window.addEventListener('scroll', function() {
-            const mensagens = document.querySelector('.mensagens');
-            const position = mensagens.getBoundingClientRect();
+        // Sistema de corações ajustado
+        function criarCoracao() {
+            const coracao = document.createElement('div');
+            coracao.innerHTML = '❤️';
+            coracao.className = 'coracao';
+            
+            const posX = Math.random() * window.innerWidth;
+            
+            coracao.style.left = `${posX}px`;
+            coracao.style.animation = `flutuar ${2 + Math.random() * 3}s linear`;
+            
+            document.body.appendChild(coracao);
+            
+            setTimeout(() => {
+                coracao.remove();
+            }, 3000);
+        }
 
-            if(position.top < window.innerHeight) {
-                mensagens.classList.add('visible');
+        // Ativar corações ao scrollar
+        let heartsTriggered = false;
+        window.addEventListener('scroll', () => {
+            if (!heartsTriggered && window.scrollY > 100) {
+                for (let i = 0; i < 15; i++) {
+                    setTimeout(criarCoracao, i * 100);
+                }
+                heartsTriggered = true;
             }
         });
 
-        // Efeito interativo nos polaroids
+        // Efeito nos polaroids
         document.querySelectorAll('.polaroid').forEach(item => {
             item.addEventListener('click', event => {
-                event.target.style.transform = 'scale(1.1) rotate(0deg)';
+                event.target.style.transform = 'scale(0.95)';
                 setTimeout(() => {
                     event.target.style.transform = '';
-                }, 500);
+                }, 200);
             });
         });
     </script>

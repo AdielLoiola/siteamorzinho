@@ -16,6 +16,7 @@
             background-color: #f9f9f9;
             line-height: 1.6;
             touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .header {
@@ -97,7 +98,7 @@
             font-size: 0.9em;
         }
 
-        /* Animação dos corações */
+        /* Animação dos corações corrigida */
         .coracao {
             position: fixed;
             pointer-events: none;
@@ -106,18 +107,20 @@
             z-index: 1000;
             opacity: 0.9;
             user-select: none;
+            will-change: transform, opacity;
         }
 
         @keyframes flutuar {
             0% {
-                transform: translateY(110vh) scale(0.8);
+                transform: translateY(100vh) translateX(-10%) scale(0.8);
                 opacity: 1;
             }
             50% {
+                transform: translateY(50vh) translateX(10%) scale(1.2);
                 opacity: 0.8;
             }
             100% {
-                transform: translateY(-50vh) scale(1.5);
+                transform: translateY(-20vh) translateX(-10%) scale(1.5);
                 opacity: 0;
             }
         }
@@ -137,6 +140,7 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            -webkit-backdrop-filter: blur(12px);
             backdrop-filter: blur(12px);
         }
 
@@ -218,8 +222,19 @@
             }
 
             .coracao {
-                font-size: 32px;
-                animation-duration: 7s;
+                font-size: 36px;
+                animation-duration: 6s !important;
+            }
+
+            @keyframes flutuar {
+                0% {
+                    transform: translateY(100vh) translateX(-5%) scale(0.8);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(-10vh) translateX(5%) scale(1.5);
+                    opacity: 0;
+                }
             }
 
             .close-btn {
@@ -265,37 +280,47 @@
             coracao.innerHTML = '❤️';
             coracao.className = 'coracao';
             
-            const posX = Math.random() * (window.innerWidth - 100);
-            const delay = Math.random() * 3;
+            const posX = Math.random() * (window.innerWidth - 50);
+            const delay = Math.random() * 2;
             const tamanho = 28 + Math.random() * 24;
             
             coracao.style.left = `${posX}px`;
-            coracao.style.animation = `flutuar ${5 + Math.random() * 3}s ease-in-out ${delay}s`;
+            coracao.style.animation = `flutuar ${5}s ease-in-out ${delay}s`;
             coracao.style.fontSize = `${tamanho}px`;
             
             document.body.appendChild(coracao);
             
             setTimeout(() => {
                 coracao.remove();
-            }, 8000);
+            }, 7000);
         }
 
         // Disparador reforçado para mobile
         let heartsTriggered = false;
         function dispararCoroes() {
             if (!heartsTriggered) {
-                for (let i = 0; i < 50; i++) {
-                    setTimeout(criarCoracao, i * 120);
-                }
                 heartsTriggered = true;
+                for (let wave = 0; wave < 3; wave++) {
+                    for (let i = 0; i < 15; i++) {
+                        setTimeout(() => {
+                            criarCoracao();
+                            criarCoracao();
+                        }, i * 300 + wave * 2000);
+                    }
+                }
             }
         }
 
-        // Eventos multiplataforma
+        // Eventos multiplataforma corrigidos
         window.addEventListener('load', dispararCoroes);
         window.addEventListener('scroll', dispararCoroes);
-        window.addEventListener('touchstart', dispararCoroes);
-        window.addEventListener('click', dispararCoroes);
+        
+        if ('ontouchstart' in window) {
+            window.addEventListener('touchstart', dispararCoroes);
+            window.addEventListener('touchend', dispararCoroes);
+        } else {
+            window.addEventListener('click', dispararCoroes);
+        }
 
         // Sistema de Fullscreen
         document.querySelectorAll('.polaroid').forEach(polaroid => {
@@ -326,7 +351,6 @@
                 
                 setTimeout(() => overlay.classList.add('active'), 10);
                 
-                // Fechar overlay
                 const close = () => {
                     overlay.classList.remove('active');
                     setTimeout(() => overlay.remove(), 500);

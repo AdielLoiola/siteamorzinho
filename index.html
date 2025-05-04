@@ -3,129 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site Responsivo</title>
+    <title>Feliz Aniversário!</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', cursive;
         }
 
         body {
-            background-color: #ffffff;
+            background-color: #fff5f8;
             line-height: 1.6;
         }
 
         .header {
-            background-color: #f8f9fa;
-            padding: 20px;
+            background-color: #ffecf3;
+            padding: 30px 20px;
             text-align: center;
-            border-bottom: 1px solid #e9ecef;
+            border-bottom: 3px dashed #ff99bb;
         }
 
-        .nav {
-            margin-top: 15px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
+        .frase-aniversario {
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(45deg, #ff99bb, #ff6699);
+            color: white;
+            margin: 30px 0;
+            position: relative;
         }
 
-        .nav a {
-            text-decoration: none;
-            color: #495057;
-            padding: 5px 10px;
+        .frase-aniversario h2 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
 
-        .nav a:hover {
-            color: #0d6efd;
-        }
-
-        .container {
+        .polaroid-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            padding: 30px;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
         }
 
-        .hero {
-            text-align: center;
-            padding: 60px 20px;
-            background-color: #f8f9fa;
-            margin-bottom: 30px;
+        .polaroid {
+            background: white;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transform: rotate(3deg);
+            transition: transform 0.3s;
+            cursor: pointer;
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        .polaroid:nth-child(even) {
+            transform: rotate(-2deg);
+        }
+
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border: 2px solid #eee;
+        }
+
+        .mensagens {
+            display: flex;
+            flex-direction: column;
             gap: 20px;
-            padding: 20px;
+            padding: 40px 20px;
+            background-color: #fff0f5;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease;
         }
 
-        .card {
-            background-color: #fff;
-            border: 1px solid #e9ecef;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        .mensagens.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .footer {
-            background-color: #f8f9fa;
+        .mensagem {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
             text-align: center;
-            padding: 20px;
-            margin-top: 30px;
-            border-top: 1px solid #e9ecef;
+            font-style: italic;
+            color: #666;
         }
 
         @media (max-width: 768px) {
-            .hero {
-                padding: 40px 20px;
+            .polaroid-grid {
+                gap: 20px;
+                padding: 20px;
             }
             
-            .nav {
-                flex-direction: column;
-                align-items: center;
-                gap: 10px;
+            .frase-aniversario h2 {
+                font-size: 1.8em;
             }
+        }
+
+        .coracoes {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 24px;
+            color: #ff6699;
+            z-index: 100;
         }
     </style>
 </head>
 <body>
     <header class="header">
-        <h1>Meu Site Responsivo</h1>
-        <nav class="nav">
-            <a href="#home">Home</a>
-            <a href="#sobre">Sobre</a>
-            <a href="#servicos">Serviços</a>
-            <a href="#contato">Contato</a>
-        </nav>
+        <h1>🎉 Feliz Aniversário! 🎂</h1>
     </header>
 
-    <div class="hero">
-        <h2>Bem-vindo ao Nosso Site</h2>
-        <p>Um exemplo de site moderno e responsivo</p>
-    </div>
+    <section class="frase-aniversario">
+        <h2>"A vida é mais doce quando celebramos juntos!"</h2>
+        <p>Este é um dia especial para lembrar de todos os momentos incríveis que compartilhamos</p>
+    </section>
 
-    <div class="container">
-        <div class="grid">
-            <div class="card">
-                <h3>Sobre Nós</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
-            </div>
-            <div class="card">
-                <h3>Nossos Serviços</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
-            </div>
-            <div class="card">
-                <h3>Contato</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
-            </div>
+    <div class="polaroid-grid">
+        <!-- Adicione suas fotos aqui -->
+        <div class="polaroid">
+            <img src="https://source.unsplash.com/random/800x600/?birthday" alt="Momento Feliz">
+            <p>Primeira comemoração</p>
+        </div>
+        <div class="polaroid">
+            <img src="https://source.unsplash.com/random/800x601/?celebration" alt="Celebração">
+            <p>Risadas compartilhadas</p>
+        </div>
+        <div class="polaroid">
+            <img src="https://source.unsplash.com/random/800x602/?party" alt="Festa">
+            <p>Noite especial</p>
         </div>
     </div>
 
-    <footer class="footer">
-        <p>© 2024 Meu Site Responsivo. Todos os direitos reservados.</p>
-    </footer>
+    <div class="mensagens">
+        <div class="mensagem">Você torna cada momento mais brilhante ✨</div>
+        <div class="mensagem">Que este ano traga novas aventuras! 🌟</div>
+        <div class="mensagem">Sua existência é um presente para o mundo 🎁</div>
+    </div>
+
+    <div class="coracoes">❤️🧡💛💚💙💜</div>
+
+    <script>
+        // Animação das mensagens ao scroll
+        window.addEventListener('scroll', function() {
+            const mensagens = document.querySelector('.mensagens');
+            const position = mensagens.getBoundingClientRect();
+
+            if(position.top < window.innerHeight) {
+                mensagens.classList.add('visible');
+            }
+        });
+
+        // Efeito interativo nos polaroids
+        document.querySelectorAll('.polaroid').forEach(item => {
+            item.addEventListener('click', event => {
+                event.target.style.transform = 'scale(1.1) rotate(0deg)';
+                setTimeout(() => {
+                    event.target.style.transform = '';
+                }, 500);
+            });
+        });
+    </script>
 </body>
 </html>

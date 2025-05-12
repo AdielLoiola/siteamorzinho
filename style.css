@@ -1,0 +1,233 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f9f9f9;
+    line-height: 1.6;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.header {
+    background-color: #ffffff;
+    padding: 40px 20px;
+    text-align: center;
+    border-bottom: 2px solid #eeeeee;
+}
+
+.frase-aniversario {
+    text-align: center;
+    padding: 60px 20px;
+    background: #f0f4ff;
+    margin: 30px 0;
+}
+
+.frase-aniversario h2 {
+    font-size: 2.2em;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+.polaroid-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.polaroid {
+    background: white;
+    padding: 15px 15px 40px 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transform: rotate(2deg);
+    transition: transform 0.3s;
+    cursor: pointer;
+    position: relative;
+}
+
+.polaroid::after {
+    content: '';
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    height: 1px;
+    background: #ddd;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.polaroid:nth-child(even) {
+    transform: rotate(-1deg);
+}
+
+.polaroid:hover {
+    transform: rotate(0deg) scale(1.03);
+}
+
+.polaroid img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    filter: grayscale(20%);
+    transition: filter 0.3s;
+}
+
+.polaroid:hover img {
+    filter: grayscale(0%);
+}
+
+.polaroid p {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* Nova animação de corações */
+.coracao {
+    position: fixed;
+    pointer-events: none;
+    font-size: 24px;
+    animation: voar 4s linear forwards;
+    z-index: 1000;
+    opacity: 0;
+    user-select: none;
+    will-change: transform, opacity;
+}
+
+@keyframes voar {
+    0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) translateX(20vw);
+        opacity: 0;
+    }
+}
+
+/* Overlay fullscreen */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    backdrop-filter: blur(12px);
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.overlay-content {
+    max-width: 90%;
+    max-height: 90%;
+    transform: scale(0.85);
+    transition: transform 0.4s 0.2s;
+    position: relative;
+}
+
+.overlay.active .overlay-content {
+    transform: scale(1);
+}
+
+.overlay img {
+    width: 100%;
+    height: auto;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+}
+
+.overlay-caption {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    text-align: center;
+    font-size: 1.3em;
+    text-shadow: 0 3px 6px rgba(0,0,0,0.6);
+    opacity: 0;
+    transition: opacity 0.4s 0.3s;
+    width: 100%;
+    max-width: 600px;
+    padding: 0 20px;
+}
+
+.overlay.active .overlay-caption {
+    opacity: 1;
+}
+
+.close-btn {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    color: white;
+    font-size: 36px;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: all 0.2s;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-btn:hover {
+    opacity: 1;
+    transform: rotate(90deg);
+}
+
+@media (max-width: 768px) {
+    .polaroid-grid {
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .frase-aniversario h2 {
+        font-size: 1.8em;
+    }
+
+    .coracao {
+        font-size: 32px;
+        animation-duration: 5s;
+    }
+
+    @keyframes voar {
+        0% {
+            transform: translateY(100vh) translateX(0);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-50vh) translateX(10vw);
+            opacity: 0;
+        }
+    }
+
+    .close-btn {
+        font-size: 42px;
+        top: 15px;
+        right: 15px;
+    }
+}

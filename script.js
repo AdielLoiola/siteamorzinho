@@ -84,3 +84,17 @@ document.querySelectorAll('.polaroid').forEach(polaroid => {
         document.addEventListener('keydown', (e) => e.key === 'Escape' && close());
     });
 });
+
+// Verificação imediata para dispositivos móveis
+window.addEventListener('load', () => {
+    const fraseSection = document.querySelector('.frase-aniversario');
+    const rect = fraseSection.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0 && !heartsActive) {
+        startHearts();
+    }
+});
+
+// Ativar corações ao tocar na tela (mobile)
+document.addEventListener('touchstart', () => {
+    if (!heartsActive) startHearts();
+}, { once: true });
